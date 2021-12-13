@@ -38,17 +38,6 @@ class commandManager:
                 self.add_command(met, name=name[:-3])
                 self.command_names.append(name[:-3])
 
-    def reload_command(self, command_name):
-        for file in os.listdir("./commandClasses"):
-            name = file.title().lower()
-            if(name[:-3] == command_name):
-                thing = importlib.__import__("commandClasses." + name[:-3])
-                met = getattr(thing, (name[:-3]).lower())
-                self.add_command(met, name=name[:-3])
-                self.command_names.append(name[:-3])
-                print("Command Reloaded")
-
-
     def add_command(self, meth, **kwargs):
         self.commands[kwargs["name"]] = meth
 
