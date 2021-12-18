@@ -24,6 +24,10 @@ class commandManager:
         '''
         return commandManager.commandManagerInstance
 
+    @staticmethod
+    def reset():
+        commandManager.commandManagerInstance = None
+
     def get_command_names(self):
         return self.command_names
 
@@ -33,7 +37,8 @@ class commandManager:
             name = file.title().lower()
             if(name.lower().__contains__(".py") and not name.__contains__("__init__")):
                 print(name[:-3]+"."+name[:-3])
-                thing = importlib.__import__("commandClasses."+name[:-3])
+                thing = importlib.import_module("commandClasses."+name[:-3])
+                importlib.reload(thing)
                 met = getattr(thing, (name[:-3]).lower())
                 self.add_command(met, name=name[:-3])
                 self.command_names.append(name[:-3])
